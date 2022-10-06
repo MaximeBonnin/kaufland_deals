@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kaufland Deals</title>
+</head>
+<body>
+    <h1>Kaufland deals</h1>
+    <p>Alles im Angebot alda</p>
+    <p>Einfach Artikel mit Komma getrennt hin schreiben [Nudeln, Käse, ...]</p>
+    <form action="#" method="post">
+        <p>Einkaufsliste:</p>
+        <p><input type="text" name="ek"/></p>
+        <p><input type="submit" name="geh mal gucken"/></p>
+    </form>
+    <h2>Deine Liste</h2>
+    <p>{{ek_liste}}</p>
+    <h2>Davon im Angebot</h2>
+    {% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+    {% endfor %}
+</body>
+</html>
