@@ -20,57 +20,11 @@ def index():
     return render_template("index.html", ek_liste=ek,  tables=[subset.to_html(classes='data')], titles=subset.columns.values)
 
 
-
 @app.route("/update")
 def update():
     main()
     return redirect("/")
 
-LISTS = {
-    "WG": [
-        "Klopapier",
-        "Toilettenpapier",
-        "Olivenöl",
-        "Küchenrolle",
-        "Mehl",
-        "Reis",
-        "Bier",
-        "Zwiebel",
-        "Aperol",
-        "Bitterol",
-        "Gewürz",
-        "Müllsack",
-        "Müllsäcke",
-        "Backpapier"
-    ],
-    "Maxime": [
-        "Avocado",
-        "Barilla",
-        "tortilla",
-        "Mais",
-        "Kaffee",
-        "Schinkenwürfel",
-        "Rinderhack",
-        "Hünchen",
-        "Küchenmesser",
-        "Lichterkette",
-        "Kokosmilch",
-        "Karotten",
-        "Kürbis"
-    ],
-    "Paula": [
-        "Samba",
-        "Passierte Tomaten",
-        "Seitenbacher"
-    ],
-    "Malte": [
-        "Gin",
-        "Vodka",
-        "Rum",
-        "Limetten",
-        "Zitronen"
-    ]
-}
 
 class Item:
     def __init__(self, title, subtitle, price, dates, category, discount, quantity, basic_price):
@@ -102,6 +56,7 @@ class Item:
 
     def display(self):
         print(f"{self.date_start} bis {self.date_end}: {self.price}€ [{self.discount}%] | {self.title} [{self.subtitle}] | {self.category}")
+
 
 def find_urls():
     base_url = "https://filiale.kaufland.de/angebote"
@@ -247,6 +202,6 @@ def main():
     print(f"Total items: {len(all_items)}")
 
 
-if __name__ == '__main__':
-    # app.run(host="127.0.0.1", port=8080, debug=True)
-    app.run()
+#if __name__ == '__main__':
+#    # app.run(host="127.0.0.1", port=8080, debug=True)
+#    app.run()
