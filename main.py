@@ -82,8 +82,8 @@ class Item:
         self.discount = int(self.discount)
         self.date_start = dates[:10]
         self.date_end = dates[-10:]
-        self.category = category
-        self.quantity = quantity
+        self.category = category.strip()
+        self.quantity = quantity.strip()
         self.basic_price = basic_price
         self.on_list = False
 
@@ -248,4 +248,5 @@ def main():
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    # app.run(host="127.0.0.1", port=8080, debug=True)
+    app.run()
