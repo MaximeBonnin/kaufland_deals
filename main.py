@@ -182,6 +182,17 @@ def fetch_data_from_xlsx(deal_list):
     item_list = deal_list.split(", ")
     df = pd.read_excel("Kaufland_angebote.xlsx")
     subset = df[(df["title"].isin(item_list) | df["subtitle"].isin(item_list))]
+    subset = subset[[
+            "title",
+             "subtitle",
+             "quantity",
+             "price",
+             "discount",
+             "basic_price",
+             "date_start",
+             "date_end",
+             "category"
+        ]]
     return subset
 
 
@@ -203,5 +214,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # app.run(host="127.0.0.1", port=8080, debug=True)
-    app.run()
+    app.run(host="127.0.0.1", port=8080, debug=True)
+    # app.run()
