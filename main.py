@@ -10,14 +10,17 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+    df = pd.read_excel("Kaufland_angebote.xlsx")
+    n_deals = len(df.index)
+
     # guard clause
     if request.method != "POST":
-        return render_template("index.html", ek_liste="",  tables=[], titles="")
+        return render_template("index.html", n_deals=n_deals, ek_liste="",  tables=[], titles="")
 
     ek = request.form["ek"]
     subset = fetch_data_from_xlsx(ek)
 
-    return render_template("index.html", ek_liste=ek,  tables=[subset.to_html(classes='data')], titles=subset.columns.values)
+    return render_template("index.html", n_deals=n_deals, ek_liste=ek,  tables=[subset.to_html(classes='data')], titles=subset.columns.values)
 
 
 @app.route("/update")
@@ -211,6 +214,7 @@ def main():
     df = pd.DataFrame.from_dict(dict_of_items)
     df.to_excel("Kaufland_angebote.xlsx")
     print(f"Total items: {len(all_items)}")
+
 
 
 if __name__ == '__main__':
