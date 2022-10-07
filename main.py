@@ -47,8 +47,8 @@ class Item:
         self.discount = int(self.discount)
         self.date_start = dates[:10]
         self.date_end = dates[-10:]
-        self.category = category.strip()
-        self.quantity = quantity.strip()
+        self.category = category.replace("/uebersicht.", "").replace("%C3%B6", "ö").replace("%C3%BC", "ü").strip()
+        self.quantity = quantity.replace("\n", "").replace("\t", "").strip()
         self.basic_price = basic_price
         self.on_list = False
 
@@ -192,7 +192,17 @@ def create_dict(all_items):
 def fetch_data_from_xlsx(deal_list):
     item_list = deal_list.split(", ")
     df = pd.read_excel("Kaufland_angebote.xlsx")
-    subset = df[(df["title"].isin(item_list) | df["subtitle"].isin(item_list))]
+
+    all_item_names = df["title"].tolist() + df["subtitle"].tolist()
+    found_items = []
+    for x in all_item_names:
+        for item in item_list:
+            item = str(item)
+            x = str(x)
+            if item.lower() in x.lower():
+                found_items.append(x)
+
+    subset = df[(df["title"].isin(found_items) | df["subtitle"].isin(found_items))]
     subset = subset[[
             "title",
              "subtitle",
@@ -211,8 +221,8 @@ def fetch_data_from_xlsx(deal_list):
         "price": "Preis (€)",
         "discount": "Reduziert (%)",
         "basic_price": "Grundpreis",
-        "date_start": "Anfang",
-        "date_end": "Ende",
+        "date_start": "Deal Anfang",
+        "date_end": "Deal Ende",
         "category": "Kategorie",
     })
     return subset
