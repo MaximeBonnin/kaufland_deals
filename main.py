@@ -15,12 +15,20 @@ def index():
 
     # guard clause
     if request.method != "POST":
-        return render_template("index.html", n_deals=n_deals, ek_liste="",  tables=[], titles="")
+        return render_template("index.html",
+                               n_deals=n_deals,
+                               ek_liste="",
+                               tables=[],
+                               titles="")
 
     ek = request.form["ek"]
     subset = fetch_data_from_xlsx(ek)
 
-    return render_template("index.html", n_deals=n_deals, ek_liste=ek,  tables=[subset.to_html(classes='data')], titles=subset.columns.values)
+    return render_template("index.html",
+                           n_deals=n_deals,
+                           ek_liste=ek,
+                           tables=[subset.to_html(classes='data')],
+                           titles=subset.columns.values)
 
 
 @app.route("/update")
@@ -196,6 +204,17 @@ def fetch_data_from_xlsx(deal_list):
              "date_end",
              "category"
         ]]
+    subset = subset.rename(columns={
+        "title": "Titel",
+        "subtitle": "Untertitel",
+        "quantity": "Menge",
+        "price": "Preis (€)",
+        "discount": "Reduziert (%)",
+        "basic_price": "Grundpreis",
+        "date_start": "Anfang",
+        "date_end": "Ende",
+        "category": "Kategorie",
+    })
     return subset
 
 
